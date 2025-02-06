@@ -1,6 +1,5 @@
 package resourceservice.service;
 
-import org.springframework.web.multipart.MultipartFile;
 import resourceservice.entity.ResourceEntity;
 
 import java.util.List;

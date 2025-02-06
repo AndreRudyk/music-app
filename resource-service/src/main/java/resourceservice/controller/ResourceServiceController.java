@@ -13,7 +13,6 @@ import resourceservice.validation.PositiveInteger;
 import response.resource.DeleteResourceResponse;
 import response.resource.ResourceResponse;
 import validation.ValidIdsCsv;
-import java.util.Arrays;
 import java.util.List;
 
 @Validated

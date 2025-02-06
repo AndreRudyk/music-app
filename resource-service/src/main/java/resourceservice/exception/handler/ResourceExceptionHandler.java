@@ -50,16 +50,8 @@ public class ResourceExceptionHandler {
 
     @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
     public ResponseEntity<BasicExceptionResponse> handleMediaTypeNotSupportedException(HttpMediaTypeNotSupportedException e) {
-        Map<String, String> errors = new HashMap<>();
         return ResponseEntity
                 .status(400)
                 .body(new BasicExceptionResponse(e.getMessage(), 400));
     }
-
-//    @ExceptionHandler(SongAlreadyExists.class)
-//    public ResponseEntity<BasicExceptionResponse> handleResourceConflict(SongAlreadyExists ex) {
-//        return ResponseEntity
-//                .status(HttpStatus.CONFLICT)
-//                .body(new BasicExceptionResponse(ex.getMessage(), 409));
-//    }
 }

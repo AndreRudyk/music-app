@@ -2,7 +2,6 @@ package resourceservice.validation.impl;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-import org.apache.tomcat.util.buf.StringUtils;
 import resourceservice.validation.IdListValidation;
 import java.util.List;
 import java.util.stream.Collectors;

@@ -15,7 +15,4 @@ public class ValidationExceptionResponse extends BasicExceptionResponse {
         super(errorMessage, errorCode);
         this.details = details;
     }
-
-    public ValidationExceptionResponse() {
-    }
 }

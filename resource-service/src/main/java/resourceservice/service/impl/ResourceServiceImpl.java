@@ -31,7 +31,7 @@ public class ResourceServiceImpl implements ResourceService {
     @Override
     public ResourceEntity saveResource(byte[] file) {
         ResourceEntity savedResource = resourceRepository.save(new ResourceEntity(file));
-        SongMetadataRequest request = null;
+        SongMetadataRequest request;
         try {
             request = createSongRequestService.extractMetadata(file, savedResource.getId());
         } catch (IOException | SAXException | TikaException e) {

@@ -15,7 +15,7 @@ public class PositiveIntegerValidatorImpl implements ConstraintValidator<Positiv
         if (value == null) {
             return false;
         }
-        int intValue = 0;
+        int intValue;
         try {
             intValue = Integer.parseInt(value);
         } catch (NumberFormatException e) {
