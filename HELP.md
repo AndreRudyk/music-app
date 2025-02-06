@@ -1,0 +1,20 @@
+# Music App
+
+### Short description
+
+A two microservices based application. Developed as a part of **Introduction to Microservices** course.
+
+The Resource Service implements CRUD operations for processing MP3 files. When uploading an MP3 file, the service:
+
+* Stores the MP3 file in the database
+* Extracts the MP3 file tags (metadata) using external libraries like Apache Tika
+* Invokes the Song Service to save the MP3 file tags (metadata)
+
+The Song Service implements CRUD operations for managing song metadata records. The service uses the Resource ID to uniquely identify each metadata record, establishing a direct one-to-one relationship between resources and their metadata.
+
+### Guides
+
+In order to run the app locally, run `docker-compose up -d` in the root folder and then launch **resource-service** and **music-service**.
+
+
+
