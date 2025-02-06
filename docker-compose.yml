@@ -1,0 +1,29 @@
+version: "3.8"
+services:
+  postgres_db_service_8080:
+    image: postgres:16
+    container_name: postgres_db_service_8080
+    environment:
+      POSTGRES_DB: resources_db_8080
+      POSTGRES_USER: user8080
+      POSTGRES_PASSWORD: password8080
+    ports:
+      - "5432:5432"  # Map PostgreSQL default port to host
+    volumes:
+      - pgdata1:/var/lib/postgresql/data
+
+  postgres_db_service_8082:
+    image: postgres:16
+    container_name: postgres_db_service_8082
+    environment:
+      POSTGRES_DB: resources_db_8082
+      POSTGRES_USER: user8082
+      POSTGRES_PASSWORD: password8082
+    ports:
+      - "5433:5432"  # Map PostgreSQL default port to different port on host
+    volumes:
+      - pgdata2:/var/lib/postgresql/data
+
+volumes:
+  pgdata1:
+  pgdata2:

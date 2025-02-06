@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5433/resources_db_8082
+    driverClassName: org.postgresql.Driver
+    username: user8082
+    password: password8082
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: create-drop
+
+server:
+  port: 8082
+  servlet:
+    context-path: /song-service
+
+resource-service:
+  baseUrl: http://localhost:8080/resource-service/api/v1/resources/
