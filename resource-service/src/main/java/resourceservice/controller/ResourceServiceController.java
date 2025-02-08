@@ -16,6 +16,8 @@ import response.resource.ResourceResponse;
 import validation.ValidIdsCsv;
 import java.util.List;
 
+import static org.springframework.http.HttpStatus.OK;
+
 @Validated
 @AllArgsConstructor
 @RestController
@@ -24,12 +26,14 @@ public class ResourceServiceController {
 
     private final ResourceService resourceService;
 
+    @ResponseStatus(OK)
     @PostMapping(path =  "/resources", consumes = "audio/mpeg")
     public ResourceResponse uploadResource(@RequestBody @TagValidation byte[] file) {
         ResourceEntity uploadedEntity = resourceService.saveResource(file);
         return new ResourceResponse(uploadedEntity.getId());
     }
 
+    @ResponseStatus(OK)
     @GetMapping(path = "/resources/{id}", produces = "audio/mpeg")
     public ResponseEntity<byte[]> getResource(@PathVariable @Valid @PositiveInteger String id) {
         ResourceEntity entity = resourceService.getResourceById(Integer.parseInt(id));
@@ -43,6 +47,7 @@ public class ResourceServiceController {
                 .body(entity.getBytes());
     }
 
+    @ResponseStatus(OK)
     @DeleteMapping(path = "/resources", produces = MediaType.APPLICATION_JSON_VALUE)
     public DeleteResourceResponse deleteResource(@RequestParam("id") @ValidIdsCsv(maxLength = 100) String ids) {
         List<Integer> deletedIds = resourceService.deleteByIds(ids);
@@ -51,6 +56,7 @@ public class ResourceServiceController {
                 .build();
     }
 
+    @ResponseStatus(OK)
     @GetMapping(path = "/resources/{id}/exists")
     public boolean existsResource(@PathVariable @Valid @PositiveInteger String id) {
         return resourceService.resourceExists(id);
