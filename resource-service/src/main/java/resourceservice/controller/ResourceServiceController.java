@@ -9,6 +9,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import resourceservice.entity.ResourceEntity;
 import resourceservice.service.ResourceService;
+import resourceservice.validation.TagValidation;
 import resourceservice.validation.PositiveInteger;
 import response.resource.DeleteResourceResponse;
 import response.resource.ResourceResponse;
@@ -24,7 +25,7 @@ public class ResourceServiceController {
     private final ResourceService resourceService;
 
     @PostMapping(path =  "/resources", consumes = "audio/mpeg")
-    public ResourceResponse uploadResource(@RequestBody byte[] file) {
+    public ResourceResponse uploadResource(@RequestBody @TagValidation byte[] file) {
         ResourceEntity uploadedEntity = resourceService.saveResource(file);
         return new ResourceResponse(uploadedEntity.getId());
     }

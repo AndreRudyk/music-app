@@ -11,8 +11,6 @@ import songservice.entity.SongMetadataEntity;
 import songservice.response.DeleteSongResponse;
 import songservice.service.SongService;
 import validation.ValidIdsCsv;
-
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -38,8 +36,7 @@ public class SongController {
 
     @DeleteMapping
     public DeleteSongResponse deleteSongMetadata(@RequestParam("id") @ValidIdsCsv(maxLength = 100) String ids) {
-        List<Integer> parsedIds = Arrays.stream(ids.split(",")).map(Integer::parseInt).toList();
-        List<Integer> deletedIds = songService.deleteSongMetadata(parsedIds);
+        List<Integer> deletedIds = songService.deleteSongMetadata(ids);
         return DeleteSongResponse.builder()
                 .ids(deletedIds)
                 .build();

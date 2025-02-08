@@ -11,6 +11,8 @@
 
     <artifactId>resource-service</artifactId>
     <packaging>jar</packaging>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>resource-service</name>
 
     <dependencies>
         <dependency>
@@ -47,4 +49,12 @@
             <artifactId>postgresql</artifactId>
         </dependency>
     </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>
