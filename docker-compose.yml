@@ -8,7 +8,7 @@ services:
       POSTGRES_USER: user8080
       POSTGRES_PASSWORD: password8080
     ports:
-      - "5432:5432"  # Map PostgreSQL default port to host
+      - "5432:5432"
     volumes:
       - pgdata1:/var/lib/postgresql/data
 
@@ -20,7 +20,7 @@ services:
       POSTGRES_USER: user8082
       POSTGRES_PASSWORD: password8082
     ports:
-      - "5433:5432"  # Map PostgreSQL default port to different port on host
+      - "5433:5432"
     volumes:
       - pgdata2:/var/lib/postgresql/data
 

@@ -11,9 +11,9 @@ import songservice.entity.SongMetadataEntity;
 import songservice.response.DeleteSongResponse;
 import songservice.service.SongService;
 import validation.ValidIdsCsv;
-
-import java.util.Arrays;
 import java.util.List;
+
+import static org.springframework.http.HttpStatus.OK;
 
 @RestController
 @AllArgsConstructor
@@ -25,21 +25,23 @@ public class SongController {
 
     private final SongConverter songConverter;
 
+    @ResponseStatus(OK)
     @PostMapping
     public SongMetadataResponse saveSongMetadata(@Valid @RequestBody SongMetadataRequest request) {
         SongMetadataEntity songMetadata = songService.createSongMetadata(request);
         return songConverter.convert(songMetadata);
     }
 
+    @ResponseStatus(OK)
     @GetMapping("/{id}")
     public SongMetadataResponse getSongMetadata(@PathVariable Integer id) {
         return songConverter.convert(songService.getSongMetadata(id));
     }
 
+    @ResponseStatus(OK)
     @DeleteMapping
     public DeleteSongResponse deleteSongMetadata(@RequestParam("id") @ValidIdsCsv(maxLength = 100) String ids) {
-        List<Integer> parsedIds = Arrays.stream(ids.split(",")).map(Integer::parseInt).toList();
-        List<Integer> deletedIds = songService.deleteSongMetadata(parsedIds);
+        List<Integer> deletedIds = songService.deleteSongMetadata(ids);
         return DeleteSongResponse.builder()
                 .ids(deletedIds)
                 .build();

@@ -11,5 +11,5 @@ public interface SongService {
 
     SongMetadataEntity getSongMetadata(Integer id);
 
-    List<Integer> deleteSongMetadata(List<Integer> ids);
+    List<Integer> deleteSongMetadata(String ids);
 }

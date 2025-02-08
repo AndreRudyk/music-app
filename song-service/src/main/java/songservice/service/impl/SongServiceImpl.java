@@ -12,6 +12,7 @@ import songservice.exception.SongMatadataNotFound;
 import songservice.repository.SongMetadataRepository;
 import songservice.service.SongService;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
@@ -47,10 +48,11 @@ public class SongServiceImpl implements SongService {
     }
 
     @Override
-    public List<Integer> deleteSongMetadata(List<Integer> ids) {
-        List<Integer> existingIds = ids.stream()
-                        .filter(repository::existsById)
-                        .toList();
+    public List<Integer> deleteSongMetadata(String ids) {
+        List<Integer> existingIds = Arrays.stream(ids.split(","))
+                .map(Integer::parseInt)
+                .filter(repository::existsById)
+                .toList();
         repository.deleteAllByIdInBatch(existingIds);
         return existingIds;
     }
