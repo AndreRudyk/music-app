@@ -1,14 +1,18 @@
 package resourceservice.validation.impl;
 
-import com.mpatric.mp3agic.InvalidDataException;
-import com.mpatric.mp3agic.Mp3File;
-import com.mpatric.mp3agic.UnsupportedTagException;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
+import org.apache.tika.exception.TikaException;
+import org.apache.tika.metadata.Metadata;
+import org.apache.tika.parser.ParseContext;
+import org.apache.tika.parser.mp3.Mp3Parser;
+import org.apache.tika.sax.BodyContentHandler;
+import org.xml.sax.SAXException;
 import resourceservice.validation.TagValidation;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
+import java.io.*;
+
+import static resourceservice.util.AudioTagUtils.*;
 
 public class TagValidationImpl implements ConstraintValidator<TagValidation, byte[]> {
 
@@ -19,10 +23,21 @@ public class TagValidationImpl implements ConstraintValidator<TagValidation, byt
     @Override
     public boolean isValid(byte[] bytes, ConstraintValidatorContext constraintValidatorContext) {
         try {
-            Mp3File mp3File = new Mp3File(new ByteArrayInputStream(bytes).toString());
-            return mp3File.hasId3v1Tag() || mp3File.hasId3v2Tag();
-        } catch (IOException | UnsupportedTagException | InvalidDataException e) {
-            return false;
+            return areTagsValid(bytes);
+        } catch (IOException | TikaException | SAXException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private boolean areTagsValid(byte[] songData) throws IOException, TikaException, SAXException {
+        try (InputStream inputstream = new ByteArrayInputStream(songData)) {
+            BodyContentHandler handler = new BodyContentHandler();
+            Metadata metadata = new Metadata();
+            ParseContext pcontext = new ParseContext();
+            Mp3Parser mp3Parser = new Mp3Parser();
+            mp3Parser.parse(inputstream, handler, metadata, pcontext);
+            return metadata.get(TITLE_TAG) != null && metadata.get(ARTIST_TAG) != null
+                    && metadata.get(ALBUM_TAG) != null && metadata.get(RELEASE_DATE_TAG) != null;
         }
     }
 }

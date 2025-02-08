@@ -13,6 +13,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import static resourceservice.util.AudioTagUtils.*;
+
 @Service
 public class CreateSongRequestServiceImpl implements CreateSongRequestService {
 
@@ -28,11 +30,11 @@ public class CreateSongRequestServiceImpl implements CreateSongRequestService {
 
             SongMetadataRequest songMetadata = new SongMetadataRequest();
             songMetadata.setId(String.valueOf(id));
-            songMetadata.setName(metadata.get("title") != null ? metadata.get("title") : "Unknown Title");
-            songMetadata.setArtist(metadata.get("xmpDM:artist") != null ? metadata.get("xmpDM:artist") : "Unknown Artist");
-            songMetadata.setAlbum(metadata.get("xmpDM:album") != null ? metadata.get("xmpDM:album") : "Unknown Album");
-            songMetadata.setDuration(formatDuration(metadata.get("xmpDM:duration")));
-            songMetadata.setYear(metadata.get("xmpDM:releaseDate"));
+            songMetadata.setName(metadata.get(TITLE_TAG) != null ? metadata.get(TITLE_TAG) : "Unknown Title");
+            songMetadata.setArtist(metadata.get(ARTIST_TAG) != null ? metadata.get(ARTIST_TAG) : "Unknown Artist");
+            songMetadata.setAlbum(metadata.get(ALBUM_TAG) != null ? metadata.get(ALBUM_TAG) : "Unknown Album");
+            songMetadata.setDuration(formatDuration(metadata.get(DURATION_TAG)));
+            songMetadata.setYear(metadata.get(RELEASE_DATE_TAG));
 
             return songMetadata;
         }

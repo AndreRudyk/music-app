@@ -35,7 +35,7 @@ public class SongExceptionHandler {
         });
         return ResponseEntity
                 .status(400)
-                .body(new ValidationExceptionResponse(e.getMessage(), 400, errors));
+                .body(new ValidationExceptionResponse("Validation failed", 400, errors));
     }
 
     @ExceptionHandler(SongAlreadyExists.class)
