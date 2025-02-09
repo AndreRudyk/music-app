@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import error.BasicExceptionResponse;
 import songservice.exception.SongAlreadyExists;
-import songservice.exception.SongMatadataNotFound;
+import songservice.exception.SongMetadataNotFound;
 import error.ValidationExceptionResponse;
 
 import java.util.HashMap;
@@ -18,8 +18,8 @@ import java.util.Map;
 @RestControllerAdvice
 public class SongExceptionHandler {
 
-    @ExceptionHandler(SongMatadataNotFound.class)
-    public ResponseEntity<BasicExceptionResponse> handleResourceNotFound(SongMatadataNotFound ex) {
+    @ExceptionHandler(SongMetadataNotFound.class)
+    public ResponseEntity<BasicExceptionResponse> handleResourceNotFound(SongMetadataNotFound ex) {
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
                 .body(new BasicExceptionResponse(ex.getMessage(), 404));

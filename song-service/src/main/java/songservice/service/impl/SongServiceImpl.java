@@ -8,7 +8,7 @@ import songservice.client.ResourceClient;
 import songservice.converter.SongConverter;
 import songservice.entity.SongMetadataEntity;
 import songservice.exception.SongAlreadyExists;
-import songservice.exception.SongMatadataNotFound;
+import songservice.exception.SongMetadataNotFound;
 import songservice.repository.SongMetadataRepository;
 import songservice.service.SongService;
 
@@ -40,11 +40,11 @@ public class SongServiceImpl implements SongService {
         if (!client.resourceExists(id)) {
             log.error("Song not found, id: {}", id);
             repository.deleteAllByIdInBatch(List.of(id));
-            throw new SongMatadataNotFound(String.format("Resource with ID=%s not found", id));
+            throw new SongMetadataNotFound(String.format("Resource with ID=%s not found", id));
         }
         return repository.findById(id)
                 .orElseThrow(() ->
-                        new SongMatadataNotFound((String.format("Resource with ID=%s not found", id))));
+                        new SongMetadataNotFound((String.format("Resource with ID=%s not found", id))));
     }
 
     @Override
