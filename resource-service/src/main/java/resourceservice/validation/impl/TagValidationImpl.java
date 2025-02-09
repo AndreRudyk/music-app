@@ -12,6 +12,7 @@ import resourceservice.validation.TagValidation;
 
 import java.io.*;
 
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
 import static resourceservice.util.AudioTagUtils.*;
 
 public class TagValidationImpl implements ConstraintValidator<TagValidation, byte[]> {
@@ -36,8 +37,8 @@ public class TagValidationImpl implements ConstraintValidator<TagValidation, byt
             ParseContext pcontext = new ParseContext();
             Mp3Parser mp3Parser = new Mp3Parser();
             mp3Parser.parse(inputstream, handler, metadata, pcontext);
-            return metadata.get(TITLE_TAG) != null && metadata.get(ARTIST_TAG) != null
-                    && metadata.get(ALBUM_TAG) != null && metadata.get(RELEASE_DATE_TAG) != null;
+            return isNotBlank(metadata.get(TITLE_TAG)) && isNotBlank(metadata.get(ARTIST_TAG))
+                    && isNotBlank(metadata.get(ALBUM_TAG)) && isNotBlank(metadata.get(RELEASE_DATE_TAG));
         }
     }
 }
