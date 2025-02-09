@@ -2,6 +2,7 @@ package songservice.controller;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import request.song.SongMetadataRequest;
@@ -13,8 +14,6 @@ import songservice.service.SongService;
 import validation.ValidIdsCsv;
 import java.util.List;
 
-import static org.springframework.http.HttpStatus.OK;
-
 @RestController
 @AllArgsConstructor
 @Validated
@@ -25,25 +24,20 @@ public class SongController {
 
     private final SongConverter songConverter;
 
-    @ResponseStatus(OK)
     @PostMapping
-    public SongMetadataResponse saveSongMetadata(@Valid @RequestBody SongMetadataRequest request) {
+    public ResponseEntity<SongMetadataResponse> saveSongMetadata(@Valid @RequestBody SongMetadataRequest request) {
         SongMetadataEntity songMetadata = songService.createSongMetadata(request);
-        return songConverter.convert(songMetadata);
+        return ResponseEntity.ok(songConverter.convert(songMetadata));
     }
 
-    @ResponseStatus(OK)
     @GetMapping("/{id}")
-    public SongMetadataResponse getSongMetadata(@PathVariable Integer id) {
-        return songConverter.convert(songService.getSongMetadata(id));
+    public ResponseEntity<SongMetadataResponse> getSongMetadata(@PathVariable Integer id) {
+        return ResponseEntity.ok(songConverter.convert(songService.getSongMetadata(id)));
     }
 
-    @ResponseStatus(OK)
     @DeleteMapping
-    public DeleteSongResponse deleteSongMetadata(@RequestParam("id") @ValidIdsCsv(maxLength = 100) String ids) {
+    public ResponseEntity<DeleteSongResponse> deleteSongMetadata(@RequestParam("id") @ValidIdsCsv(maxLength = 100) String ids) {
         List<Integer> deletedIds = songService.deleteSongMetadata(ids);
-        return DeleteSongResponse.builder()
-                .ids(deletedIds)
-                .build();
+        return ResponseEntity.ok(DeleteSongResponse.builder().ids(deletedIds).build());
     }
 }

@@ -16,25 +16,21 @@ import response.resource.ResourceResponse;
 import validation.ValidIdsCsv;
 import java.util.List;
 
-import static org.springframework.http.HttpStatus.OK;
-
 @Validated
 @AllArgsConstructor
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/resources")
 public class ResourceServiceController {
 
     private final ResourceService resourceService;
 
-    @ResponseStatus(OK)
-    @PostMapping(path =  "/resources", consumes = "audio/mpeg")
-    public ResourceResponse uploadResource(@RequestBody @TagValidation byte[] file) {
+    @PostMapping(consumes = "audio/mpeg")
+    public ResponseEntity<ResourceResponse> uploadResource(@RequestBody @TagValidation byte[] file) {
         ResourceEntity uploadedEntity = resourceService.saveResource(file);
-        return new ResourceResponse(uploadedEntity.getId());
+        return ResponseEntity.ok(new ResourceResponse(uploadedEntity.getId()));
     }
 
-    @ResponseStatus(OK)
-    @GetMapping(path = "/resources/{id}", produces = "audio/mpeg")
+    @GetMapping(path = "/{id}", produces = "audio/mpeg")
     public ResponseEntity<byte[]> getResource(@PathVariable @Valid @PositiveInteger String id) {
         ResourceEntity entity = resourceService.getResourceById(Integer.parseInt(id));
         String fileName = entity.getId() + ".mp3";
@@ -47,18 +43,14 @@ public class ResourceServiceController {
                 .body(entity.getBytes());
     }
 
-    @ResponseStatus(OK)
-    @DeleteMapping(path = "/resources", produces = MediaType.APPLICATION_JSON_VALUE)
-    public DeleteResourceResponse deleteResource(@RequestParam("id") @ValidIdsCsv(maxLength = 100) String ids) {
+    @DeleteMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<DeleteResourceResponse> deleteResource(@RequestParam("id") @ValidIdsCsv(maxLength = 100) String ids) {
         List<Integer> deletedIds = resourceService.deleteByIds(ids);
-        return DeleteResourceResponse.builder()
-                .ids(deletedIds)
-                .build();
+        return ResponseEntity.ok(DeleteResourceResponse.builder().ids(deletedIds).build());
     }
 
-    @ResponseStatus(OK)
-    @GetMapping(path = "/resources/{id}/exists")
-    public boolean existsResource(@PathVariable @Valid @PositiveInteger String id) {
-        return resourceService.resourceExists(id);
+    @GetMapping(path = "/{id}/exists")
+    public ResponseEntity<Boolean> existsResource(@PathVariable @Valid @PositiveInteger String id) {
+        return ResponseEntity.ok(resourceService.resourceExists(id));
     }
 }
