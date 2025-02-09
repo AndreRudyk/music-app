@@ -5,7 +5,7 @@ spring:
       max-request-size: 2MB
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/resources_db_8080
+    url: jdbc:postgresql://localhost:5432/resource-db
     driverClassName: org.postgresql.Driver
     username: user8080
     password: password8080

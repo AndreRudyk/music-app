@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5433/resources_db_8082
+    url: jdbc:postgresql://localhost:5433/song-db
     driverClassName: org.postgresql.Driver
     username: user8082
     password: password8082
