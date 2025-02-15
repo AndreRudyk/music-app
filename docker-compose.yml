@@ -1,18 +1,48 @@
+version: '3.9'
+
 services:
   resource-db:
-    image: postgres:17-alpine
+    image: postgres:17-alpine3.20
     environment:
-      POSTGRES_DB: resource-db
-      POSTGRES_USER: user8080
-      POSTGRES_PASSWORD: password8080
+      POSTGRES_DB: ${POSTGRES_DB_RESOURCE}
+      POSTGRES_USER: ${POSTGRES_USER_RESOURCE}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD_RESOURCE}
     ports:
       - "5432:5432"
+    volumes:
+      - ./init-scripts/resource-db:/docker-entrypoint-initdb.d
 
   song-db:
-    image: postgres:17-alpine
+    image: postgres:17-alpine3.20
     environment:
-      POSTGRES_DB: song-db
-      POSTGRES_USER: user8082
-      POSTGRES_PASSWORD: password8082
+      POSTGRES_DB: ${POSTGRES_DB_SONG}
+      POSTGRES_USER: ${POSTGRES_USER_SONG}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD_SONG}
     ports:
       - "5433:5432"
+    volumes:
+      - ./init-scripts/song-db:/docker-entrypoint-initdb.d
+
+  resource-service:
+    build:
+      context: .
+      dockerfile: Dockerfile-resource
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: ${RESOURCE_DB_URL}
+      SONG_SERVICE_URL: http://song-service:8082
+    depends_on:
+      - resource-db
+
+  song-service:
+    build:
+      context: .
+      dockerfile: Dockerfile-song
+    ports:
+      - "8082:8082"
+    environment:
+      SPRING_DATASOURCE_URL: ${SONG_DB_URL}
+      RESOURCE_SERVICE_URL: http://resource-service:8080
+    depends_on:
+      - song-db
