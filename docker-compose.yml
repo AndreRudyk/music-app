@@ -1,5 +1,3 @@
-version: '3.9'
-
 services:
   resource-db:
     image: postgres:17-alpine3.20
@@ -26,7 +24,7 @@ services:
   resource-service:
     build:
       context: .
-      dockerfile: Dockerfile-resource
+      dockerfile: ./resource-service/Dockerfile-resource
     ports:
       - "8080:8080"
     environment:
@@ -38,7 +36,7 @@ services:
   song-service:
     build:
       context: .
-      dockerfile: Dockerfile-song
+      dockerfile: ./song-service/Dockerfile-song
     ports:
       - "8082:8082"
     environment:

@@ -14,7 +14,7 @@ The Song Service implements CRUD operations for managing song metadata records. 
 
 ### Guides
 
-In order to launch the app locally, run `docker-compose up -d` command in the root folder and then launch **resource-service** and **music-service**.
+In order to launch the app locally, run `docker-compose up -d` command in the root folder.
 
 
 

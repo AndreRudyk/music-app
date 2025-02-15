@@ -15,6 +15,9 @@ spring:
     hibernate:
       ddl-auto: none
 
+  flyway:
+    enabled: false
+
 server:
   port: 8080
   servlet:
@@ -22,3 +25,5 @@ server:
 
 song-service:
   baseUrl: ${SONG_SERVICE_URL:http://localhost:8082}/song-service/api/v1/songs
+
+

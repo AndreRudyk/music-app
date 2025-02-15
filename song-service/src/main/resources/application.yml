@@ -10,6 +10,9 @@ spring:
     hibernate:
       ddl-auto: none
 
+  flyway:
+    enabled: false
+
 server:
   port: 8082
   servlet:
