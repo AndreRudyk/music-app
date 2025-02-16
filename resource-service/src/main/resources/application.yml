@@ -22,5 +22,3 @@ server:
 
 song-service:
   baseUrl: ${SONG_SERVICE_URL:http://localhost:8082}/song-service/api/v1/songs
-
-
