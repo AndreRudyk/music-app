@@ -1,9 +1,9 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5433/song-db
+    url: ${SONG_DB_URL:jdbc:postgresql://localhost:5433/song-db}
     driverClassName: org.postgresql.Driver
-    username: user8082
-    password: password8082
+    username: ${POSTGRES_USER_SONG:user8082}
+    password: ${POSTGRES_PASSWORD_SONG:password8082}
 
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
