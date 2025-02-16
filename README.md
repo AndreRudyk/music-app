@@ -14,7 +14,16 @@ The Song Service implements CRUD operations for managing song metadata records. 
 
 ### Guides
 
+Manually install the domain module before running the services: `mvn clean install -DskipTests` 
+
 In order to launch the app locally, run `docker-compose up -d` command in the root folder.
+
+For API testing, update the default base paths:
+Change / in Postman to:
+
+* /resource-service/api/v1
+
+* /song-service/api/v1
 
 
 
