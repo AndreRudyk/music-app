@@ -5,15 +5,15 @@ spring:
       max-request-size: 2MB
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/resource-db
+    url: ${RESOURCE_DB_URL:jdbc:postgresql://localhost:5432/resource-db}
     driverClassName: org.postgresql.Driver
-    username: user8080
-    password: password8080
+    username: ${POSTGRES_USER_RESOURCE:user8080}
+    password: ${POSTGRES_PASSWORD_RESOURCE:password8080}
 
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: none
 
 server:
   port: 8080
@@ -21,4 +21,4 @@ server:
     context-path: /resource-service
 
 song-service:
-  baseUrl: http://localhost:8082/song-service/api/v1/songs
+  baseUrl: ${SONG_SERVICE_URL:http://localhost:8082}/song-service/api/v1/songs
