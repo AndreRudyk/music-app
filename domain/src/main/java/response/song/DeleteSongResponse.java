@@ -1,4 +1,4 @@
-package songservice.response;
+package response.song;
 
 import lombok.Builder;
 import lombok.Data;

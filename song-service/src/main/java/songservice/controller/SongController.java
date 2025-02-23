@@ -9,7 +9,7 @@ import request.song.SongMetadataRequest;
 import response.song.SongMetadataResponse;
 import songservice.converter.SongConverter;
 import songservice.entity.SongMetadataEntity;
-import songservice.response.DeleteSongResponse;
+import response.song.DeleteSongResponse;
 import songservice.service.SongService;
 import validation.ValidIdsCsv;
 import java.util.List;
