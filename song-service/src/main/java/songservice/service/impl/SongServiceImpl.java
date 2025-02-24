@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import request.song.SongMetadataRequest;
-import songservice.client.ResourceClient;
+import songservice.client.feign.ResourceServiceClient;
 import songservice.converter.SongConverter;
 import songservice.entity.SongMetadataEntity;
 import songservice.exception.SongAlreadyExists;
@@ -24,7 +24,7 @@ public class SongServiceImpl implements SongService {
 
     private final SongConverter converter;
 
-    private final ResourceClient client;
+    private final ResourceServiceClient client;
 
     @Override
     public SongMetadataEntity createSongMetadata(SongMetadataRequest request) {
@@ -37,7 +37,7 @@ public class SongServiceImpl implements SongService {
 
     @Override
     public SongMetadataEntity getSongMetadata(Integer id) {
-        if (!client.resourceExists(id)) {
+        if (Boolean.FALSE.equals(client.existsResource(String.valueOf(id)).getBody())) {
             log.error("Song not found, id: {}", id);
             repository.deleteAllByIdInBatch(List.of(id));
             throw new SongMetadataNotFound(String.format("Resource with ID=%s not found", id));

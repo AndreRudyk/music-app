@@ -6,7 +6,7 @@ import org.apache.tika.exception.TikaException;
 import org.springframework.stereotype.Service;
 import org.xml.sax.SAXException;
 import request.song.SongMetadataRequest;
-import resourceservice.client.SongServiceClient;
+import resourceservice.client.feign.SongServiceClient;
 import resourceservice.entity.ResourceEntity;
 import resourceservice.exception.ResourceNotFoundException;
 import resourceservice.repository.ResourceRepository;
@@ -55,7 +55,7 @@ public class ResourceServiceImpl implements ResourceService {
                 .filter(resourceRepository::existsById)
                 .toList();
         resourceRepository.deleteAllByIdInBatch(existingIds);
-        songServiceClient.deleteSongMetadata(existingIds);
+        songServiceClient.deleteSongMetadata(ids);
         return existingIds;
     }
 
