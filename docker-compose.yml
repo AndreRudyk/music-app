@@ -48,8 +48,8 @@ services:
     build:
       context: .
       dockerfile: ./song-service/Dockerfile-song
-    deploy:
-      replicas: 2
+#    deploy:
+#      replicas: 2
     ports:
       - 8082-8083:8082
     environment:
