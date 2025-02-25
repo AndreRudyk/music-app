@@ -38,7 +38,12 @@ public class ResourceServiceImpl implements ResourceService {
             log.error("Exception occured while extracting metadata, resource id is {}", savedResource.getId());
             throw new RuntimeException(e);
         }
-        songServiceClient.saveSongMetadata(request);
+        try {
+            songServiceClient.saveSongMetadata(request);
+        } catch (Exception e) {
+            resourceRepository.deleteAllByIdInBatch(List.of(savedResource.getId()));
+            throw new RuntimeException(e);
+        }
         return savedResource;
     }
 
