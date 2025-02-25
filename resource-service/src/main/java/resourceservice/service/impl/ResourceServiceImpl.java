@@ -41,7 +41,7 @@ public class ResourceServiceImpl implements ResourceService {
         try {
             songServiceClient.saveSongMetadata(request);
         } catch (Exception e) {
-            resourceRepository.deleteAllByIdInBatch(List.of(savedResource.getId()));
+            resourceRepository.deleteById(savedResource.getId());
             throw new RuntimeException(e);
         }
         return savedResource;
